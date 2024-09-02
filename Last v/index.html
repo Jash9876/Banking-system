@@ -1,0 +1,240 @@
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=7-_KARmrF9jhV-migCMqR_d4tifvFwPqIa-RQ_-KajIO4Xum0cQwW285PVEVpy3RiA0Sq2EL2i9sOowrrpT9mFI440fN_dl0DGBylnqmuWI94E9xEw5rdPYxcIjrIcLdFYMZXQ8pp-nA_DdbsvkVnqIz59hzWnaYWgaG2yoPZ7ynGB3ZSKhHuZ4_aibu7nNvCDHvl_p8koXZGfSWGCMMaXmwZUgeVLZjnXgFN-TlxyfxdSd1DOjZ1WIX78QBihOif63zHdASFyTKM245Fn1SMQ" charset="UTF-8"></script><script src="script.js"></script>
+    <script src="script.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Balance Checker</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:  linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1772&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat;
+            background-size: cover;
+            background-position:center;
+            font-family: "Poppins" , sans-serif;
+            text-align: center;
+        }
+
+        
+
+        .wrapper {
+            width: 420px;
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(30px);
+            color: azure;
+            border-radius: 10px;
+            padding: 30px 40px;
+            
+        }
+
+        .login-container {
+            width: 400px;
+            margin: 0 auto;
+            background:transparent;
+            padding: 10px;
+            
+        }
+
+        h2{
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .hidden-container {
+            display:none;
+        }
+
+        .input-box input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 40px;
+        font-size: 16px;
+        color: azure;
+        padding: 20px 45px 20px 20px;
+        }
+
+        .input-box input::placeholder {
+        color:azure;
+        }
+
+        .input-box i {
+        position:relative;
+        left: 170px;
+        top: 10px;
+        transform: translateY(-305%);
+        font-size: 20px;
+        }
+
+        p{
+            font-size: 20px;
+            font-weight: 400;
+            font-style:italic;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            position: relative;
+            box-sizing: border-box;
+            background: transparent;
+        }
+        
+        .login-btn, .register-btn, .withdraw-btn, .deposit-btn {
+            width: 195px;
+            height: 50px;
+            border-radius: 40px;
+            border: 0 0 10px solid rgba(0,0,0,0.1);
+            font-size: 16px;
+            cursor: pointer;
+            color:black;
+            font-weight: 600;
+        }
+
+        .invalid-message{
+            color: red;
+        }
+        
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #333333;
+            transition: opacity 0.75s, visibility 0.75s;
+            }
+
+        .loader--hidden {
+            opacity: 0;
+            visibility: hidden;
+            }
+
+        .loader::after {
+            content: "";
+            width: 75px;
+            height: 75px;
+            border: 15px solid #dddddd;
+            border-top-color: #009578;
+            border-radius: 50%;
+            animation: loading 0.75s ease infinite;
+            }
+
+        @keyframes loading {
+            from {
+                transform: rotate(0turn);
+            }
+            to {
+                transform: rotate(1turn);
+            }
+            }
+
+    </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="wrapper active">
+        <div class="login-container">
+            <h2>Check Your Balance!</h2>
+            
+                
+            <div class="input-box">
+                <input type="text" id="username" name="username" placeholder="Username" onchange="user()" required="">
+                <i class="bx bxs-user"></i>
+                <span id="username-message" class="invalid-message" style="display: none;"></span>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="password" name="password" placeholder='Password' onchange="pass()" required="">
+                <i class="bx bxs-lock-alt"></i>
+                <span id="password-message" class="invalid-message" style="display: none;"></span>
+            </div>
+
+            <br>
+
+            <button type="button" id="btn1" class="login-btn" onclick="submit()">Login</button>
+            <button type="button" id="btn2"class="register-btn" onclick="showHiddenContainer()">Register</button>
+                
+            </div>
+
+            <div class="hidden-container", style="margin-top: 20px;", id="result">
+                <p id="accno">Accno: </p>
+                <p id="balance">Result: </p>
+                <p id="money">Money withdrawn/deposited: </p>
+                <div class="input-box">
+                   <input type="int" id="amt" placeholder="Balance">
+                    <i class='bx bxs-wallet'></i>
+                </div>
+            
+                <button type="button" class="withdraw-btn" onclick="withdraw()">Withdraw</button>
+                <button type="button" class="deposit-btn" onclick="deposit()">Deposit</button>
+            </div>
+            
+        </div>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+window.addEventListener("load", () => {
+    const loader = document.querySelector(".loader");
+  
+    loader.classList.add("loader--hidden");
+  
+    loader.addEventListener("transitionend", () => {
+      document.body.removeChild(loader);
+    });
+  });
+
+    function user() {
+        var username = document.getElementById("username").value;
+        var usernamePattern = /^[a-zA-Z0-9._-]{0,10}$/;
+        var usernameIsValid = usernamePattern.test(username);
+        var usernameField = document.getElementById("username");
+        var usernameMessage = document.getElementById("username-message");
+
+        if (usernameIsValid) {
+            usernameField.style.borderColor = "green";
+            usernameMessage.style.display = "none";
+            document.getElementById("btn1").disabled = false;
+            document.getElementById("btn2").disabled = false;
+        } else {
+            usernameField.style.borderColor = "red";
+            usernameMessage.style.display = "block";
+            document.getElementById("btn1").disabled = true;
+            document.getElementById("btn2").disabled = true;
+        }
+    }
+
+    function pass() {
+        var password = document.getElementById("password").value;
+        var passwordPattern = /^[a-zA-Z0-9._-]{1,5}$/;
+        var passwordIsValid = passwordPattern.test(password);
+        var passwordField = document.getElementById("password");
+        var passwordMessage = document.getElementById("password-message");
+
+        if (passwordIsValid) {
+            passwordField.style.borderColor = "green";
+            passwordMessage.style.display = "none";
+        } else {
+            passwordField.style.borderColor = "red";
+            passwordMessage.style.display = "block";
+        }
+    }
+</script>
+</html>
